@@ -1,0 +1,129 @@
+clear
+### Installation
+
+- sudo docker pull mikolatero/vlmcsd
+- sudo docker run -d -p 1688:1688 --restart=always --name kms_server mikolatero/vlmcsd /vlmcsd -D -d -t 3 -e -v -R172800 -A10080
+
+#### Python version (Recommended)
+```
+docker run --rm -ti -d --name py-kms -p 1688:1688 -v /etc/localtime:/etc/localtime:ro ghcr.io/py-kms-organization/py-kms
+```
+
+### Convert the Evaluation Server to Full Server 
+
+#### 2012 Evaluation Server 
+
+(Standard Evaluation)
+
+```
+dism /online /set-edition:serverstandard /productkey:D2N9P-3P6X9-2R39C-7RTCD-MDVJX /accepteula
+```
+
+(DataCenter Evaluation)
+
+```
+dism /online /set-edition:serverdatacenter /productkey:W3GGN-FT8W3-Y4M27-J84CP-Q3VJ9 /accepteula
+```
+
+#### 2016 Evaluation Server 
+
+(Standard Evaluation)
+
+```
+dism /online /set-edition:serverstandard /productkey:WC2BQ-8NRM3-FDDYY-2BFGV-KHKQY /accepteula
+```
+
+(DataCenter Evaluation)
+
+```
+dism /online /set-edition:serverdatacenter /productkey:CB7KF-BWN84-R7R2Y-793K2-8XDDG /accepteula
+```
+
+#### 2019 Evaluation Server 
+
+(Standard Evaluation)
+
+```
+dism /online /set-edition:serverstandard /productkey:N69G4-B89J2-4G8F4-WWYCC-J464C /accepteula
+```
+
+(DataCenter Evaluation)
+
+```
+dism /online /set-edition:serverdatacenter /productkey:WMDGN-G9PQG-XVVXX-R3X43-63DFG /accepteula
+```
+
+#### 2022 Evaluation Server
+
+(Standard Evaluation)
+
+```
+dism /online /set-edition:serverstandard /productkey:VDYBN-27WPP-V4HQT-9VMD4-VMK7H /accepteula
+```
+
+(DataCenter Evaluation)
+
+```
+dism /online /set-edition:serverdatacenter /productkey:WX4NM-KYWYW-QJJR4-XV3QB-6VM33 /accepteula
+```
+
+`Note: Restart the system now`
+
+### Actual Activation
+
+```
+slmgr.vbs -ipk <copy-the-product-key-according-to-the-windows-version-as-used-before>
+slmgr.vbs -skms 192.168.14.147 (change the ip address with your docker host machine's ip)
+slmgr.vbs -ato
+```
+
+### References
+
+- https://getproductkey.net/how-to-upgrade-windows-server-evaluation-to-full-version/
+- https://woshub.com/install-kms-server-vlmcsd-linux/
+- https://github.com/Wind4/vlmcsd
+
+### More keys for Older versions as well..
+
+- https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys
+
+
+### Office 2016 Professional Pro
+
+```
+cscript ospp.vbs /sethst:172.17.0.20
+```
+Do this multiple times, also install the copy of 2016 which is on oissg drive
+
+### Office 2021 pro plus
+
+```
+http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/en-us/O365ProPlusRetail.img
+```
+OR
+
+```
+https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/en-us/ProPlus2021Retail.img
+```
+### Steps to Activate
+
+- First install the setup from the above 
+- then open cmd using admin and run the below
+
+
+```
+if exist "C:\Program Files\Microsoft Office\Office16\ospp.vbs" cd /d "C:\Program Files\Microsoft Office\Office16"
+if exist "C:\Program Files (x86)\Microsoft Office\Office16\ospp.vbs" cd /d "C:\Program Files (x86)\Microsoft Office\Office16"
+for /f %x in ('dir /b ..\root\Licenses16\ProPlus2021VL_KMS*.xrm-ms') do cscript ospp.vbs /inslic:"..\root\Licenses16\%x"
+cscript ospp.vbs /inpkey:FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH
+cscript ospp.vbs /sethst:172.17.0.20
+cscript ospp.vbs /act
+pause
+```
+
+#### References
+
+- https://github.com/21Z/Microsoft-Office-2021#method-2-activate-microsoft-office-2021-using-batch-file
+- https://windowsedition.com/download-office-2021-offline-installer-iso/
+- https://activateforfree.com/install-office-2019-windows-7/
+
