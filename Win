@@ -127,3 +127,7 @@ pause
 - https://windowsedition.com/download-office-2021-offline-installer-iso/
 - https://activateforfree.com/install-office-2019-windows-7/
 
+
+slmgr.vbs -ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
+slmgr.vbs -skms 192.168.0.103
+slmgr.vbs -ato
